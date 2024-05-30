@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$primary-color: #FFCAD4;
+
+.bg-primary {
+    background-color: $primary-color;
+}
+
+.button-primary {
+    background-color: $primary-color;
+    color: white;
+}
