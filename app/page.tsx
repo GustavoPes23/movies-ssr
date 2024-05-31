@@ -23,7 +23,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-8 bg-primary shadow-2xl">
       <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8">
         {isLoading ? (
-          <Spinner />
+          <Spinner width={8} height={8} />
         ) : !authAtom.token ? (
           <div className="grid col-rows-2">
             <FormLogin />
