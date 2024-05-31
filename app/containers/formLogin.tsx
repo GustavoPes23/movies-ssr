@@ -47,8 +47,6 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
       setIsLoading(true);
       const response = await fetchLogin(data);
 
-      console.log(response?.data);
-
       if (response?.data) {
         setAuth({
           ...response.data.login,
