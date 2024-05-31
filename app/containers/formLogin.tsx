@@ -1,4 +1,4 @@
-import { type FC, memo, useState, useCallback } from "react";
+import { type FC, memo, useState, useCallback, useLayoutEffect } from "react";
 
 import { useAtom } from "jotai";
 import { RESET } from "jotai/utils";
@@ -8,10 +8,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { fetchData } from "../service/service";
 
 import { type AuthStateProps, authStateAtom } from "../state/authState";
-import {
-  type PasswordStateProps,
-  passwordStateAtom,
-} from "../state/passwordState";
+import { type LoginStateProps, loginStateAtom } from "../state/loginState";
+import Spinner from "../components/spinner";
 
 interface Inputs {
   readonly login: string;
@@ -19,30 +17,25 @@ interface Inputs {
   readonly rememberMe: boolean;
 }
 
-interface DataLogin {
-  readonly login: string;
-  readonly password: string;
-}
-
 const FormLogin: FC = () => {
-  const [_, setAuth] = useAtom<AuthStateProps>(authStateAtom);
-  const [password, setPassword] =
-    useAtom<PasswordStateProps>(passwordStateAtom);
+  const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
+  const [loginAtom, setLoginAtom] = useAtom<LoginStateProps>(loginStateAtom);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [passwordValue, setPasswordValue] = useState<string>(password.password);
+  const [login, setLogin] = useState<LoginStateProps>(loginAtom);
   const [rememberMe, setRememberMe] = useState<boolean>(
-    password.password ? true : false
+    login.password ? true : false
   );
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const fetchLogin = useCallback(async (dataLogin: DataLogin) => {
-    return await fetchData<DataLogin>(
+  const fetchLogin = useCallback(async (dataLogin: Inputs) => {
+    return await fetchData<Inputs>(
       `query Login($login: String!, $password: String!) {
       login(login: $login, password: $password) {
         token
@@ -60,17 +53,18 @@ const FormLogin: FC = () => {
       const response = await fetchLogin(data);
 
       if (response?.data) {
-        setAuth({
+        setAuthAtom({
           ...response.data.login,
         });
       }
 
       if (!!data.rememberMe) {
-        setPassword({
+        setLoginAtom({
+          login: data.login,
           password: data.password,
         });
       } else {
-        setPassword(RESET as unknown as PasswordStateProps);
+        setLoginAtom(RESET as unknown as LoginStateProps);
       }
     } catch (error) {
       console.error(error);
@@ -78,6 +72,21 @@ const FormLogin: FC = () => {
       setIsLoading(false);
     }
   };
+
+  const handleStorageLogin = useCallback((): void => {
+    if (!loginAtom.password || !loginAtom.login) {
+      return;
+    }
+
+    setLogin(loginAtom);
+    setRememberMe(true);
+    setValue("login", loginAtom.login);
+    setValue("password", loginAtom.password);
+  }, [loginAtom, setValue]);
+
+  useLayoutEffect(() => {
+    handleStorageLogin();
+  }, [handleStorageLogin]);
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +104,13 @@ const FormLogin: FC = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
           placeholder="name@company.com"
           required
-          {...register("login", { required: true, maxLength: 20 })}
+          disabled={isLoading}
+          value={login.login}
+          {...register("login", {
+            onChange: (e) => setLogin({ ...login, login: e.target.value }),
+            required: true,
+            maxLength: 20,
+          })}
         />
         {errors.login && <span>This field is required</span>}
       </div>
@@ -112,9 +127,14 @@ const FormLogin: FC = () => {
           placeholder="••••••••"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
           required
-          value={passwordValue}
+          disabled={isLoading}
+          value={login.password}
           {...register("password", {
-            onChange: (e) => setPasswordValue(e.target.value),
+            onChange: (e) =>
+              setLogin({
+                ...login,
+                password: e.target.value,
+              }),
             required: true,
             minLength: 1,
           })}
@@ -128,6 +148,7 @@ const FormLogin: FC = () => {
               id="remember"
               type="checkbox"
               value=""
+              disabled={isLoading}
               checked={rememberMe}
               {...register("rememberMe", {
                 onChange: (e) => setRememberMe(e.target.checked),
@@ -154,7 +175,7 @@ const FormLogin: FC = () => {
         className="w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center button-primary"
         disabled={isLoading}
       >
-        {isLoading ? "Loading..." : "Login"}
+        {isLoading ? <Spinner width={5} height={5} /> : "Login"}
       </button>
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?{" "}
