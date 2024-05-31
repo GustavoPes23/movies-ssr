@@ -1,14 +1,22 @@
 import { type FC, memo, useState, useCallback } from "react";
 
 import { useAtom } from "jotai";
+import { RESET } from "jotai/utils";
 
 import { useForm, SubmitHandler } from "react-hook-form";
+
 import { fetchData } from "../service/service";
-import { authStateAtom } from "../state/authState";
+
+import { type AuthStateProps, authStateAtom } from "../state/authState";
+import {
+  type PasswordStateProps,
+  passwordStateAtom,
+} from "../state/passwordState";
 
 interface Inputs {
   readonly login: string;
   readonly password: string;
+  readonly rememberMe: boolean;
 }
 
 interface DataLogin {
@@ -16,13 +24,17 @@ interface DataLogin {
   readonly password: string;
 }
 
-interface FormLoginProps {
-  readonly setLoggedIn: (loggedIn: boolean) => void;
-}
+const FormLogin: FC = () => {
+  const [_, setAuth] = useAtom<AuthStateProps>(authStateAtom);
+  const [password, setPassword] =
+    useAtom<PasswordStateProps>(passwordStateAtom);
 
-const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [_, setAuth] = useAtom(authStateAtom);
+  const [passwordValue, setPasswordValue] = useState<string>(password.password);
+  const [rememberMe, setRememberMe] = useState<boolean>(
+    password.password ? true : false
+  );
+
   const {
     register,
     handleSubmit,
@@ -51,7 +63,14 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
         setAuth({
           ...response.data.login,
         });
-        setLoggedIn(true);
+      }
+
+      if (!!data.rememberMe) {
+        setPassword({
+          password: data.password,
+        });
+      } else {
+        setPassword(RESET as unknown as PasswordStateProps);
       }
     } catch (error) {
       console.error(error);
@@ -62,20 +81,18 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-      <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-        Acessar plataforma
-      </h5>
+      <h5 className="text-xl font-medium text-gray-900">Acessar plataforma</h5>
       <div>
         <label
           htmlFor="login"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900"
         >
-          Login
+          Username
         </label>
         <input
           type="text"
           id="login"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
           placeholder="name@company.com"
           required
           {...register("login", { required: true, maxLength: 20 })}
@@ -85,7 +102,7 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
       <div>
         <label
           htmlFor="password"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900"
         >
           Senha
         </label>
@@ -93,10 +110,16 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
           type="password"
           id="password"
           placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
           required
-          {...register("password", { required: true, minLength: 1 })}
+          value={passwordValue}
+          {...register("password", {
+            onChange: (e) => setPasswordValue(e.target.value),
+            required: true,
+            minLength: 1,
+          })}
         />
+        {errors.password && <span>This field is required</span>}
       </div>
       <div className="flex items-start">
         <div className="flex items-start">
@@ -105,6 +128,10 @@ const FormLogin: FC<FormLoginProps> = ({ setLoggedIn }) => {
               id="remember"
               type="checkbox"
               value=""
+              checked={rememberMe}
+              {...register("rememberMe", {
+                onChange: (e) => setRememberMe(e.target.checked),
+              })}
               className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
             />
           </div>
