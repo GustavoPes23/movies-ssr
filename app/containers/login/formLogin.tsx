@@ -14,6 +14,7 @@ import { type AlertStateProps, alertStateAtom } from "@/app/state/alertState";
 import Spinner from "@/app/components/spinner";
 
 import { InputsForm } from "@/app/login/types";
+import PasswordField from "./passwordField";
 
 const FormLogin: FC = () => {
   const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
@@ -117,33 +118,14 @@ const FormLogin: FC = () => {
         />
         {errors.login && <span>This field is required</span>}
       </div>
-      <div>
-        <label
-          htmlFor="password"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Senha
-        </label>
-        <input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          required
-          disabled={isLoading}
-          value={login.password}
-          {...register("password", {
-            onChange: (e) =>
-              setLogin({
-                ...login,
-                password: e.target.value,
-              }),
-            required: true,
-            minLength: 1,
-          })}
-        />
-        {errors.password && <span>This field is required</span>}
-      </div>
+      <PasswordField 
+        isLoading={isLoading}
+        login={login}
+        setLogin={setLogin}
+        register={register}
+        errors={errors}
+      />
+
       <div className="flex items-start">
         <div className="flex items-start">
           <div className="flex items-center h-5">
@@ -178,9 +160,7 @@ const FormLogin: FC = () => {
         className="w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center button-primary"
         disabled={isLoading}
       >
-        {isLoading ? (
-          <Spinner width={5} height={5} />
-        ) : 'Login'}
+        {isLoading ? <Spinner width={5} height={5} /> : "Login"}
       </button>
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?{" "}
