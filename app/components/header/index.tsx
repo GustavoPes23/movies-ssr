@@ -197,7 +197,17 @@ const Index: FC = () => {
                     ))}
                   </div>
                   <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
-                    <button
+                    <motion.button
+                      type="button"
+                      whileTap={{
+                        scale: 0.9,
+                        transition: { 
+                          duration: 0.6,
+                          ease: [0, 0.71, 0.2, 1.01],
+                          type: 'spring'
+                        },
+                      }}
+                      whileHover={{ scale: 1.04 }}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                       onClick={handleLogoutDesktop}
                     >
@@ -206,7 +216,7 @@ const Index: FC = () => {
                         aria-hidden="true"
                       />
                       Logout
-                    </button>
+                    </motion.button>
                   </div>
                 </PopoverPanel>
               </Transition>

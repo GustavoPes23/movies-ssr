@@ -116,7 +116,7 @@ const FormLogin: FC = () => {
             maxLength: 20,
           })}
         />
-        {errors.login && <span>This field is required</span>}
+        {errors.login && <span>{errors.login.message}</span>}
       </div>
       <PasswordField 
         isLoading={isLoading}
@@ -125,7 +125,6 @@ const FormLogin: FC = () => {
         register={register}
         errors={errors}
       />
-
       <div className="flex items-start">
         <div className="flex items-start">
           <div className="flex items-center h-5">

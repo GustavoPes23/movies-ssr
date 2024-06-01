@@ -56,10 +56,9 @@ const CreateAccount: FC = () => {
   };
 
   return (
-    <main className="flex min-h-screen justify-center align-center bg-primary md:p-24 p-8">
+    <div className="flex h-screen justify-center items-center md:p-24 p-8">
       <AnimatePresence mode="wait">
         <motion.div
-          className="w-full grid justify-center align-center"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
@@ -69,18 +68,22 @@ const CreateAccount: FC = () => {
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >
-          <Stepper currentStep={currentStep} />
-          <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
-            <FormCreateAccount
-              wizardSteps={wizardSteps}
-              handleBackStep={handleBackStep}
-              handleNextStep={handleNextStep}
-              isLastStep={isLastStep}
-            />
+          <div className="col-span-1 sm:col-span-1 grow mb-6">
+            <Stepper currentStep={currentStep} />
+          </div>
+          <div className="col-span-1 sm:col-span-1 min-w-96">
+            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
+              <FormCreateAccount
+                wizardSteps={wizardSteps}
+                handleBackStep={handleBackStep}
+                handleNextStep={handleNextStep}
+                isLastStep={isLastStep}
+              />
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>
-    </main>
+    </div>
   );
 };
 

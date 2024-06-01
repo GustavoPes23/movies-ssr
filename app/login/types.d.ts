@@ -4,4 +4,11 @@ interface InputsForm {
   readonly rememberMe: boolean;
 }
 
-export { InputsForm };
+interface RequestCreateAccount {
+  readonly name: string;
+  readonly email: string;
+  readonly login: string;
+  readonly password: string;
+}
+
+export { InputsForm, RequestCreateAccount };

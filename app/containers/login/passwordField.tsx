@@ -49,7 +49,7 @@ const PasswordField: FC<PasswordFieldProps> = ({
             minLength: 1,
           })}
         />
-        {errors.password && <span>This field is required</span>}
+        {errors.password && <span>{errors.password.message}</span>}
         <button
           type="button"
           onClick={() => setIsVisible(!isVisible)}

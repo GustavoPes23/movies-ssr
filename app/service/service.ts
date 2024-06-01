@@ -17,7 +17,7 @@ const getErrors = (errors: Errors[]) =>
   errors.map((error) => error.message).join(", ");
 
 export const fetchData = async <T>(query: string, variables: T) => {
-  const res = await fetch("https://movies-api-psi-eosin.vercel.app/graphql", {
+  const res = await fetch("http://localhost:4000", {
     method: "POST",
     cache: "no-cache",
     headers: {
