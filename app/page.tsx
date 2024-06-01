@@ -2,25 +2,32 @@
 
 import { useAtom } from "jotai/react";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import { type AuthStateProps, authStateAtom } from "./state/authState";
 
 import Alert from "./components/alert";
 import Header from "./components/header";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
   const router = useRouter();
   const [authAtom] = useAtom<AuthStateProps>(authStateAtom);
-  
+
   if (!authAtom.token) {
-    router.push('/login');
+    setTimeout(() => {
+      router.push("/login");
+    }, 600);
   }
 
   return (
-    <main className="min-h-screen bg-primary">
-      <Header />
-      <Alert />
-    </main>
+    <AnimatePresence mode="wait">
+      {authAtom.token && (
+        <main className="min-h-screen bg-primary">
+          <Header />
+          <Alert />
+        </main>
+      )}
+    </AnimatePresence>
   );
 }
