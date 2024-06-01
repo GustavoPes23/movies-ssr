@@ -62,7 +62,7 @@ const FormCreateAccount: FC<FormCreateAccountProps> = ({
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {wizardSteps.previous === 0 && <PersonalData />}
 
       {wizardSteps.previous === 1 && <LoginData />}
@@ -78,7 +78,7 @@ const FormCreateAccount: FC<FormCreateAccountProps> = ({
           type={isLastStep() ? "submit" : "button"}
           onClick={handleNextStep}
           disabled={isLoading}
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm button-primary"
         >
           {isLastStep()
             ? isLoading

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, type FC } from "react";
+import { useRef, useState, type FC } from "react";
 
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/utils";
@@ -74,6 +74,16 @@ const Index: FC = () => {
   const [authAtom, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
+  const dropdownDesktop = useRef<HTMLButtonElement | null>(null);
+
+  const handleLogoutDesktop = () => {
+    dropdownDesktop.current?.click();
+    const myTimer = setTimeout(() => {
+      clearTimeout(myTimer);
+      setAuthAtom(RESET as unknown as AuthStateProps);
+    }, 180);
+  };
+
   const handleLogout = (): void => {
     setMobileMenuOpen(false);
     setAuthAtom(RESET as unknown as AuthStateProps);
@@ -139,7 +149,10 @@ const Index: FC = () => {
 
           <PopoverGroup className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Popover className="relative">
-              <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              <PopoverButton
+                ref={dropdownDesktop}
+                className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900"
+              >
                 Olá, {authAtom.name}
                 <ChevronDownIcon
                   className="h-5 w-5 flex-none text-gray-400"
@@ -186,9 +199,7 @@ const Index: FC = () => {
                   <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
                     <button
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                      onClick={() =>
-                        setAuthAtom(RESET as unknown as AuthStateProps)
-                      }
+                      onClick={handleLogoutDesktop}
                     >
                       <ArrowLeftStartOnRectangleIcon
                         className="h-5 w-5 flex-none text-gray-400"

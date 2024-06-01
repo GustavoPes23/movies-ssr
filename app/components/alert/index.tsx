@@ -1,3 +1,4 @@
+"use client";
 import { type FC } from "react";
 
 import { type AlertStateProps, alertStateAtom } from "@/app/state/alertState";

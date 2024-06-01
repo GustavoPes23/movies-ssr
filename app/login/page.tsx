@@ -31,7 +31,7 @@ const Login: FC = () => {
   }, [authAtom.token, handleRedirect]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-primary md:p-24 p-8 ">
+    <div className="flex-col items-center justify-between md:p-24 p-8">
       <AnimatePresence mode="wait">
         {!authAtom.token && (
           <motion.div
@@ -53,7 +53,7 @@ const Login: FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </main>
+    </div>
   );
 };
 

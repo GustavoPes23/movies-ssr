@@ -4,7 +4,9 @@ import { Inter } from "next/font/google";
 
 import { Provider as JotaiProvider } from "jotai/react";
 
-import "./globals.scss";
+import Alert from "@/app/components/alert";
+
+import "@/app/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}><JotaiProvider>{children}</JotaiProvider></body>
+      <body className={inter.className}>
+        <JotaiProvider>
+          <main className="min-h-screen bg-primary">
+            {children}
+            <Alert />
+          </main>
+        </JotaiProvider>
+      </body>
     </html>
   );
 }

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 
 import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
-import Alert from "@/app/components/alert";
 import Header from "@/app/components/header";
 import { AnimatePresence } from "framer-motion";
 
@@ -22,12 +21,7 @@ export default function Home() {
 
   return (
     <AnimatePresence mode="wait">
-      {authAtom.token && (
-        <main className="min-h-screen bg-primary">
-          <Header />
-          <Alert />
-        </main>
-      )}
+      {authAtom.token && <Header />}
     </AnimatePresence>
   );
 }
