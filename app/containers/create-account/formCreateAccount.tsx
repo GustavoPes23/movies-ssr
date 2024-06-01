@@ -92,14 +92,19 @@ const FormCreateAccount: FC<FormCreateAccountProps> = ({
       const response = await fetchLogin(data);
 
       if (response?.data?.create?.id) {
+        setAlertAtom({
+          show: true,
+          message: "Conta criada com sucesso!",
+          type: "success",
+        });
         handleRedirect();
       }
     } catch (error) {
       setAlertAtom({
         show: true,
         message: (error as Error).message,
+        type: "error",
       });
-      console.error((error as Error).message);
     } finally {
       setTimeout(() => {
         setIsLoading(false);

@@ -70,8 +70,8 @@ const FormLogin: FC = () => {
       setAlertAtom({
         show: true,
         message: (error as Error).message,
+        type: "error",
       });
-      console.error((error as Error).message);
     } finally {
       setIsLoading(false);
     }
