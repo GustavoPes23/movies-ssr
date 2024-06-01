@@ -118,7 +118,7 @@ const FormLogin: FC = () => {
         />
         {errors.login && <span>{errors.login.message}</span>}
       </div>
-      <PasswordField 
+      <PasswordField
         isLoading={isLoading}
         login={login}
         setLogin={setLogin}
@@ -144,14 +144,14 @@ const FormLogin: FC = () => {
             htmlFor="remember"
             className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            Remember me
+            Lembrar me
           </label>
         </div>
         <a
           href="#"
           className="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
         >
-          Lost Password?
+          Esqueci minha senha
         </a>
       </div>
       <button
@@ -162,12 +162,12 @@ const FormLogin: FC = () => {
         {isLoading ? <Spinner width={5} height={5} /> : "Login"}
       </button>
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-        Not registered?{" "}
+        Não possui uma conta?{" "}
         <a
           href="/create-account"
           className="text-blue-700 hover:underline dark:text-blue-500"
         >
-          Create account
+          Criar conta
         </a>
       </div>
     </form>
