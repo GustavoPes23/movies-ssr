@@ -4,11 +4,11 @@ import { useAtom } from "jotai/react";
 
 import { useRouter } from "next/navigation";
 
-import { type AuthStateProps, authStateAtom } from "./state/authState";
+import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
-import Alert from "./components/alert";
-import Header from "./components/header";
-import { AnimatePresence, motion } from "framer-motion";
+import Alert from "@/app/components/alert";
+import Header from "@/app/components/header";
+import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const router = useRouter();

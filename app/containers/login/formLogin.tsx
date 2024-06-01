@@ -3,23 +3,17 @@ import { type FC, memo, useState, useCallback, useLayoutEffect } from "react";
 import { useAtom } from "jotai";
 import { RESET } from "jotai/utils";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/20/solid";
+import { fetchData } from "@/app/service/service";
 
-import { fetchData } from "../../service/service";
+import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
+import { type LoginStateProps, loginStateAtom } from "@/app/state/loginState";
+import { type AlertStateProps, alertStateAtom } from "@/app/state/alertState";
 
-import { type AuthStateProps, authStateAtom } from "../../state/authState";
-import { type LoginStateProps, loginStateAtom } from "../../state/loginState";
-import { type AlertStateProps, alertStateAtom } from "../../state/alertState";
+import Spinner from "@/app/components/spinner";
 
-import Spinner from "../../components/spinner";
-
-interface Inputs {
-  readonly login: string;
-  readonly password: string;
-  readonly rememberMe: boolean;
-}
+import { InputsForm } from "@/app/login/types";
 
 const FormLogin: FC = () => {
   const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
@@ -37,10 +31,10 @@ const FormLogin: FC = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<InputsForm>();
 
-  const fetchLogin = useCallback(async (dataLogin: Inputs) => {
-    return await fetchData<Inputs>(
+  const fetchLogin = useCallback(async (dataLogin: InputsForm) => {
+    return await fetchData<InputsForm>(
       `query Login($login: String!, $password: String!) {
       login(login: $login, password: $password) {
         token
@@ -52,7 +46,7 @@ const FormLogin: FC = () => {
     );
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<InputsForm> = async (data) => {
     try {
       setIsLoading(true);
       const response = await fetchLogin(data);
@@ -191,7 +185,7 @@ const FormLogin: FC = () => {
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?{" "}
         <a
-          href="#"
+          href="/create-account"
           className="text-blue-700 hover:underline dark:text-blue-500"
         >
           Create account

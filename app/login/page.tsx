@@ -8,9 +8,9 @@ import { useAtom } from "jotai/react";
 
 import { useRouter } from "next/navigation";
 
-import { type AuthStateProps, authStateAtom } from "../state/authState";
+import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
-import FormLogin from "../containers/login/formLogin";
+import FormLogin from "@/app/containers/login/formLogin";
 
 const Login: FC = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const Login: FC = () => {
 
     setTimeout(() => {
       router.push("/");
-    }, 600);
+    }, 500);
   }, [authAtom.token, router]);
 
   useEffect(() => {
