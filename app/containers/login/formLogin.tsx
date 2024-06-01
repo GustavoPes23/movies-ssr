@@ -5,6 +5,8 @@ import { RESET } from "jotai/utils";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/20/solid";
+
 import { fetchData } from "../../service/service";
 
 import { type AuthStateProps, authStateAtom } from "../../state/authState";
@@ -182,7 +184,9 @@ const FormLogin: FC = () => {
         className="w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center button-primary"
         disabled={isLoading}
       >
-        {isLoading ? <Spinner width={5} height={5} /> : "Login"}
+        {isLoading ? (
+          <Spinner width={5} height={5} />
+        ) : 'Login'}
       </button>
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?{" "}
