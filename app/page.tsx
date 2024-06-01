@@ -1,37 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { useAtom } from "jotai/react";
 
-import { AuthStateProps, authStateAtom } from "./state/authState";
+import { useRouter } from 'next/navigation'
 
-import Spinner from "./components/spinner";
+import { type AuthStateProps, authStateAtom } from "./state/authState";
 
-import FormLogin from "./containers/formLogin";
-import SessionLogged from "./containers/sessionLogged";
+import Alert from "./components/alert";
+import Header from "./components/header";
 
 export default function Home() {
+  const router = useRouter();
   const [authAtom] = useAtom<AuthStateProps>(authStateAtom);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, [authAtom]);
+  
+  if (!authAtom.token) {
+    router.push('/login');
+  }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-8 bg-primary shadow-2xl">
-      <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8">
-        {isLoading ? (
-          <Spinner width={8} height={8} />
-        ) : !authAtom.token ? (
-          <div className="grid col-rows-2">
-            <FormLogin />
-          </div>
-        ) : (
-          <SessionLogged />
-        )}
-      </div>
+    <main className="min-h-screen bg-primary">
+      <Header />
+      <Alert />
     </main>
   );
 }

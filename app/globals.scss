@@ -2,13 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-$primary-color: #FFCAD4;
+$primary-color: #f8f8f8;
+$secondary-color: #fe7c7c;
 
 .bg-primary {
     background-color: $primary-color;
 }
 
 .button-primary {
-    background-color: $primary-color;
+    background-color: $secondary-color;
     color: white;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }

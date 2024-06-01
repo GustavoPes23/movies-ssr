@@ -5,11 +5,13 @@ import { RESET } from "jotai/utils";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { fetchData } from "../service/service";
+import { fetchData } from "../../service/service";
 
-import { type AuthStateProps, authStateAtom } from "../state/authState";
-import { type LoginStateProps, loginStateAtom } from "../state/loginState";
-import Spinner from "../components/spinner";
+import { type AuthStateProps, authStateAtom } from "../../state/authState";
+import { type LoginStateProps, loginStateAtom } from "../../state/loginState";
+import { type AlertStateProps, alertStateAtom } from "../../state/alertState";
+
+import Spinner from "../../components/spinner";
 
 interface Inputs {
   readonly login: string;
@@ -20,6 +22,7 @@ interface Inputs {
 const FormLogin: FC = () => {
   const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
   const [loginAtom, setLoginAtom] = useAtom<LoginStateProps>(loginStateAtom);
+  const [alertAtom, setAlertAtom] = useAtom<AlertStateProps>(alertStateAtom);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [login, setLogin] = useState<LoginStateProps>(loginAtom);
@@ -67,7 +70,11 @@ const FormLogin: FC = () => {
         setLoginAtom(RESET as unknown as LoginStateProps);
       }
     } catch (error) {
-      console.error(error);
+      setAlertAtom({
+        show: true,
+        message: (error as Error).message,
+      });
+      console.error((error as Error).message);
     } finally {
       setIsLoading(false);
     }
@@ -101,7 +108,7 @@ const FormLogin: FC = () => {
         <input
           type="text"
           id="login"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="name@company.com"
           required
           disabled={isLoading}
@@ -125,7 +132,7 @@ const FormLogin: FC = () => {
           type="password"
           id="password"
           placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
           disabled={isLoading}
           value={login.password}
