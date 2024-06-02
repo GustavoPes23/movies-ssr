@@ -14,7 +14,7 @@ import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 
 interface PageProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 const Page: FC<PageProps> = ({ children }) => {
@@ -31,7 +31,7 @@ const Page: FC<PageProps> = ({ children }) => {
     <AnimatePresence mode="wait">
       <Header />
       <motion.div
-        className="w-full"
+        className="w-full container mx-auto p-4 min-h-screen"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}

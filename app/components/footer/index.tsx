@@ -2,23 +2,24 @@ import { type FC } from "react";
 
 import { motion } from "framer-motion";
 
+const currentYear = new Date().getFullYear();
+
 const Index: FC = () => {
   return (
-    <motion.div
-      className="bottom-0 fixed w-full"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{
-        duration: 0.8,
-        delay: 0.2,
-        ease: [0, 0.71, 0.2, 1.01],
-      }}
-    >
-      <footer className="bg-white rounded-lg shadow">
+    <footer className="bg-white shadow static w-full bottom-0">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
+      >
         <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023{" "}
+            © {currentYear}
             <a href="https://flowbite.com/" className="hover:underline">
               Flowbite™
             </a>
@@ -47,8 +48,8 @@ const Index: FC = () => {
             </li>
           </ul>
         </div>
-      </footer>
-    </motion.div>
+      </motion.div>
+    </footer>
   );
 };
 
