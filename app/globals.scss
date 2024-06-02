@@ -17,4 +17,8 @@ $secondary-color: #fe7c7c;
         opacity: 0.5;
         cursor: not-allowed;
     }
+
+    &:hover {
+        background-color: darken($secondary-color, 10%);
+    }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, type FC } from "react";
+import { useCallback, useLayoutEffect, type FC } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -26,12 +26,12 @@ const Login: FC = () => {
     }, 500);
   }, [authAtom.token, router]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleRedirect();
   }, [authAtom.token, handleRedirect]);
 
   return (
-    <div className="flex-col items-center justify-between md:p-24 p-8">
+    <div className="flex h-screen items-center justify-center">
       <AnimatePresence mode="wait">
         {!authAtom.token && (
           <motion.div
@@ -45,7 +45,7 @@ const Login: FC = () => {
               ease: [0, 0.71, 0.2, 1.01],
             }}
           >
-            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 mt-24 md:p-8 shadow-2xl">
+            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
               <div className="grid col-rows-2">
                 <FormLogin />
               </div>

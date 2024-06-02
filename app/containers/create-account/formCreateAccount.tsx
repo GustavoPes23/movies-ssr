@@ -22,7 +22,7 @@ import type { RequestCreateAccount } from "@/app/login/types";
 
 interface FormCreateAccountProps {
   readonly wizardSteps: WizardSteps;
-  readonly handleBackStep: () => void;
+  readonly handleBackStep: (e: unknown) => void;
   readonly handleNextStep: () => void;
   readonly isLastStep: () => boolean;
 }
@@ -122,7 +122,7 @@ const FormCreateAccount: FC<FormCreateAccountProps> = ({
         <LoginData register={register} errors={errors} />
       )}
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="mt-6 flex items-center justify-between gap-x-6">
         <button
           onClick={handleBackStep}
           className="text-sm font-semibold leading-6 text-gray-900"

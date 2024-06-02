@@ -26,7 +26,8 @@ const CreateAccount: FC = () => {
     }, 200);
   }, [router]);
 
-  const handleBackStep = (): void => {
+  const handleBackStep = (e: unknown): void => {
+    (e as Event).preventDefault();
     setCurrentStep(1);
 
     if (wizardSteps.previous === 0) {
