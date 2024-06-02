@@ -2,7 +2,7 @@
 
 import { type ReactNode, type FC, useLayoutEffect } from "react";
 
-import { useAtom, useAtomValue } from "jotai/react";
+import { useAtomValue } from "jotai/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 

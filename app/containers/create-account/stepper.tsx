@@ -33,7 +33,6 @@ const Stepper: FC<StepperProps> = ({ currentStep }) => {
           <motion.span 
             className={getClassName(currentStep === 1)}
             animate={{ 
-              scale: currentStep === 1 ? 1.1 : 1,
               opacity: currentStep === 1 ? 1 : 0.5
             }}
             transition={{
@@ -53,7 +52,6 @@ const Stepper: FC<StepperProps> = ({ currentStep }) => {
           <motion.span 
             className={getClassName(currentStep === 2)}
             animate={{ 
-              scale: currentStep === 2 ? 1.1 : 1,
               opacity: currentStep === 2 ? 1 : 0.5
             }}
             transition={{

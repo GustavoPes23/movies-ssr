@@ -15,7 +15,7 @@ const PersonalData: FC<PersonalDataProps> = ({ register, errors }) => {
       <h2 className="text-base font-semibold leading-7 text-gray-900">
         Informações pessoais
       </h2>
-      <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+      <div className="mt-8 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
         <div className="sm:col-span-6">
           <label
             htmlFor="first-name"
