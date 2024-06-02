@@ -2,7 +2,7 @@
 
 import { type ReactNode, type FC, useLayoutEffect } from "react";
 
-import { useAtom } from "jotai/react";
+import { useAtom, useAtomValue } from "jotai/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,6 +12,7 @@ import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
+import { useHydrateAtoms } from "jotai/utils";
 
 interface PageProps {
   children: ReactNode;
@@ -19,17 +20,17 @@ interface PageProps {
 
 const Page: FC<PageProps> = ({ children }) => {
   const router = useRouter();
-  const [authAtom] = useAtom<AuthStateProps>(authStateAtom);
+  const { token } = useAtomValue<AuthStateProps>(authStateAtom);
 
   useLayoutEffect(() => {
-    if (!authAtom.token) {
+    if (!token) {
       router.push("/login");
     }
-  }, [authAtom.token, router]);
+  }, [token]);
 
   return (
     <AnimatePresence mode="wait">
-      {authAtom.token && (
+      {token && (
         <>
           <Header />
           <motion.div

@@ -1,36 +1,15 @@
 "use client";
 
-import { useCallback, useLayoutEffect, type FC } from "react";
+import { type FC } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
-
-import { useAtom } from "jotai/react";
-
-import { useRouter, usePathname } from "next/navigation";
-
-import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
 import FormLogin from "@/app/containers/login/formLogin";
 
 const Login: FC = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const [authAtom] = useAtom<AuthStateProps>(authStateAtom);
-
-  const handleRedirect = useCallback(() => {
-    console.log(pathname)
-    router.push(!authAtom.token ? "login" : "home");
-  }, [authAtom.token, pathname, router]);
-
-  useLayoutEffect(() => {
-    handleRedirect();
-  }, [authAtom.token, handleRedirect]);
-
   return (
     <div className="flex h-screen items-center justify-center">
       <AnimatePresence mode="wait">
-        {!authAtom.token && (
           <motion.div
             className="w-full flex justify-center align-center"
             initial={{ opacity: 0, scale: 0.5 }}
@@ -48,7 +27,6 @@ const Login: FC = () => {
               </div>
             </div>
           </motion.div>
-        )}
       </AnimatePresence>
     </div>
   );

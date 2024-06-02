@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { RESET } from "jotai/utils";
 
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import { fetchData } from "@/app/service/service";
 
@@ -17,6 +18,8 @@ import { InputsForm } from "@/app/login/types";
 import PasswordField from "./passwordField";
 
 const FormLogin: FC = () => {
+  const router = useRouter();
+  
   const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
   const [loginAtom, setLoginAtom] = useAtom<LoginStateProps>(loginStateAtom);
   const [alertAtom, setAlertAtom] = useAtom<AlertStateProps>(alertStateAtom);
@@ -52,10 +55,8 @@ const FormLogin: FC = () => {
       setIsLoading(true);
       const response = await fetchLogin(data);
 
-      if (response?.data) {
-        setAuthAtom({
-          ...response.data.login,
-        });
+      if (!response?.data) {
+        throw new Error("Something wrong");
       }
 
       if (!!data.rememberMe) {
@@ -66,6 +67,12 @@ const FormLogin: FC = () => {
       } else {
         setLoginAtom(RESET as unknown as LoginStateProps);
       }
+
+      setAuthAtom({
+        ...response.data.login,
+      });
+
+      router.push("/home");
     } catch (error) {
       setAlertAtom({
         show: true,

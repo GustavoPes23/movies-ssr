@@ -1,4 +1,4 @@
-import { atomWithStorage } from 'jotai/utils'
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
 export interface AuthStateProps {
   id: string;
@@ -6,8 +6,15 @@ export interface AuthStateProps {
   token: string;
 }
 
-export const authStateAtom = atomWithStorage<AuthStateProps>("auth", {
-  id: "",
-  name: "",
-  token: "",
-});
+export const authStateAtom = atomWithStorage<AuthStateProps>(
+  "auth",
+  {
+    id: "",
+    name: "",
+    token: "",
+  },
+  createJSONStorage(),
+  {
+    getOnInit: true,
+  }
+);
