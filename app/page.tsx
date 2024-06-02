@@ -12,7 +12,6 @@ import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
-import { useHydrateAtoms } from "jotai/utils";
 
 interface PageProps {
   children: ReactNode;
@@ -26,29 +25,25 @@ const Page: FC<PageProps> = ({ children }) => {
     if (!token) {
       router.push("/login");
     }
-  }, [token]);
+  }, [router, token]);
 
   return (
     <AnimatePresence mode="wait">
-      {token && (
-        <>
-          <Header />
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-          >
-            {children}
-          </motion.div>
-          <Footer />
-        </>
-      )}
+      <Header />
+      <motion.div
+        className="w-full"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
+      >
+        {children}
+      </motion.div>
+      <Footer />
     </AnimatePresence>
   );
 };

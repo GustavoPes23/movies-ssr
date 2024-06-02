@@ -21,7 +21,7 @@ const Login: FC = () => {
               ease: [0, 0.71, 0.2, 1.01],
             }}
           >
-            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
+            <div className="w-full mx-8 sm:mx-0 max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
               <div className="grid col-rows-2">
                 <FormLogin />
               </div>

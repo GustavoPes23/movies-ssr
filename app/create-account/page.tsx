@@ -69,10 +69,10 @@ const CreateAccount: FC = () => {
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >
-          <div className="col-span-1 grow mb-6 mx-10 sm:mx-0">
+          <div className="col-span-1 grow mb-6 mx-6 sm:mx-0">
             <Stepper currentStep={currentStep} />
           </div>
-          <div className="col-span-1 min-w-96 px-10 sm:px-0">
+          <div className="col-span-1 min-w-96 px-6 sm:px-0">
             <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
               <FormCreateAccount
                 wizardSteps={wizardSteps}
