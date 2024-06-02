@@ -17,52 +17,25 @@ import {
   Transition,
 } from "@headlessui/react";
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   ArrowLeftStartOnRectangleIcon,
+  IdentificationIcon,
 } from "@heroicons/react/20/solid";
+
 
 import { type AuthStateProps, authStateAtom } from "../../state/authState";
 import { motion } from "framer-motion";
 
-const products = [
+const navigation = [
   {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
+    name: "Conta",
+    description: "Acesse as informaçoes da sua conta",
+    href: "/account",
+    icon: IdentificationIcon,
   },
 ];
 
@@ -107,7 +80,7 @@ const Index: FC = () => {
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/home" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
@@ -170,7 +143,7 @@ const Index: FC = () => {
               >
                 <PopoverPanel className="absolute lg:-left-[22rem] 2xl:-left-40 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                   <div className="p-4">
-                    {products.map((item) => (
+                    {navigation.map((item) => (
                       <div
                         key={item.name}
                         className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
@@ -231,7 +204,7 @@ const Index: FC = () => {
           <div className="fixed inset-0 z-10" />
           <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/home" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto"
@@ -285,7 +258,7 @@ const Index: FC = () => {
                           />
                         </DisclosureButton>
                         <DisclosurePanel className="mt-2 space-y-2">
-                          {[...products].map((item) => (
+                          {[...navigation].map((item) => (
                             <DisclosureButton
                               key={item.name}
                               as="a"
