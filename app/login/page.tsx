@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useAtom } from "jotai/react";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 
@@ -14,17 +14,14 @@ import FormLogin from "@/app/containers/login/formLogin";
 
 const Login: FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [authAtom] = useAtom<AuthStateProps>(authStateAtom);
 
   const handleRedirect = useCallback(() => {
-    if (!authAtom.token) {
-      return;
-    }
-
-    setTimeout(() => {
-      router.push("/");
-    }, 500);
-  }, [authAtom.token, router]);
+    console.log(pathname)
+    router.push(!authAtom.token ? "login" : "home");
+  }, [authAtom.token, pathname, router]);
 
   useLayoutEffect(() => {
     handleRedirect();
