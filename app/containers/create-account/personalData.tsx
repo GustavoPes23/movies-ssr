@@ -3,7 +3,7 @@ import { type FC, memo } from "react";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 
 import type { InputsForm } from "@/app/create-account/types";
-
+//teste
 interface PersonalDataProps {
   register: UseFormRegister<InputsForm>;
   errors: FieldErrors<InputsForm>;
