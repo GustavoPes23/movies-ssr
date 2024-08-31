@@ -13,6 +13,8 @@ import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 
+import Jwt from "../app/service/jwt";
+
 interface PageProps {
   readonly children: ReactNode;
 }
@@ -22,7 +24,7 @@ const Page: FC<PageProps> = ({ children }) => {
   const { token } = useAtomValue<AuthStateProps>(authStateAtom);
 
   useLayoutEffect(() => {
-    if (!token) {
+    if (Jwt.isExpired(token)) {
       router.push("/login");
     }
   }, [router, token]);
