@@ -1,10 +1,59 @@
-import { type FC } from "react";
+// "use client";
+
+import { type FC, useCallback, useEffect } from "react";
+
+// import { useAtomValue } from "jotai";
 
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
-import Page from "../page";
+import Page from "@/app/page";
+
+import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
+
+import { fetchData } from "@/app/service/service";
+
+interface UserDto {
+  readonly userId: string;
+  readonly token?: string;
+}
 
 const Account: FC = () => {
+  // const user = useAtomValue<AuthStateProps>(authStateAtom);
+
+  // const fetchMe = useCallback(async (user: UserDto) => {
+  //   return await fetchData<UserDto>(
+  //     `query User($userId: ID!) {
+  //       user(id: $userId) {
+  //         createdAt
+  //         email
+  //         id
+  //         login
+  //         name
+  //         updatedAt
+  //       }
+  //     }`,
+  //     { userId: user.userId },
+  //     user.token
+  //   );
+  // }, []);
+
+  // const me = async () => {
+  //   try {
+  //     const response = await fetchMe({
+  //       userId: user.id,
+  //       token: user.token,
+  //     });
+  //     console.log(response);
+  //   } catch (error) {
+  //   } finally {
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   me();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   return (
     <Page>
       <form>

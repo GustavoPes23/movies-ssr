@@ -1,18 +1,12 @@
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
-
+import { atom } from "jotai";
 export interface LoginStateProps {
   login: string;
   password: string;
 }
 
-export const loginStateAtom = atomWithStorage<LoginStateProps>(
-  "login",
+export const loginStateAtom = atom<LoginStateProps>(
   {
     login: "",
     password: "",
   },
-  createJSONStorage(),
-  {
-    getOnInit: true,
-  }
 );

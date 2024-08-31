@@ -17,12 +17,13 @@ const getBaseURLByEnv = (): string => {
 const getErrors = (errors: Errors[]) =>
   errors.map((error) => error.message).join(", ");
 
-export const fetchData = async <T>(query: string, variables: T) => {
+export const fetchData = async <T>(query: string, variables: T, token?: string) => {
   const res = await fetch(`${getBaseURLByEnv()}/graphql`, {
     method: "POST",
     cache: "no-cache",
     headers: {
       "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
     body: JSON.stringify({
       query,

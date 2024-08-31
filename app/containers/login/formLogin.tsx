@@ -1,6 +1,6 @@
 import { type FC, memo, useState, useCallback, useLayoutEffect } from "react";
 
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 
 import { fetchData } from "@/app/service/service";
 
-import { type AuthStateProps, authStateAtom } from "@/app/state/authState";
+import { authStateAtom } from "@/app/state/authState";
 import { type LoginStateProps, loginStateAtom } from "@/app/state/loginState";
-import { type AlertStateProps, alertStateAtom } from "@/app/state/alertState";
+import { alertStateAtom } from "@/app/state/alertState";
 
 import Spinner from "@/app/components/spinner";
 
@@ -19,10 +19,10 @@ import PasswordField from "./passwordField";
 
 const FormLogin: FC = () => {
   const router = useRouter();
-  
-  const [_, setAuthAtom] = useAtom<AuthStateProps>(authStateAtom);
+
+  const setAuthAtom = useSetAtom(authStateAtom);
   const [loginAtom, setLoginAtom] = useAtom<LoginStateProps>(loginStateAtom);
-  const [alertAtom, setAlertAtom] = useAtom<AlertStateProps>(alertStateAtom);
+  const setAlertAtom = useSetAtom(alertStateAtom);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [login, setLogin] = useState<LoginStateProps>(loginAtom);
